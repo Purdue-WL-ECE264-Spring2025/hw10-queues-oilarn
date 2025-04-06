@@ -3,15 +3,15 @@
 
 void print_tiles(struct game_state state1, struct game_state state2)
 {
-    //printf("Checking state!\n");
+    printf("Checking state!\n");
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            //printf("tile[%d][%d]: %2d, %2d ", i, j, state1.tiles[i][j], state2.tiles[i][j]);
-            //printf("tile[%d][%d]: %2d ", i, j, state1.tiles[i][j]);
+            printf("tile[%d][%d]: %2d, %2d ", i, j, state1.tiles[i][j], state2.tiles[i][j]);
+            printf("tile[%d][%d]: %2d ", i, j, state1.tiles[i][j]);
         }
-        //printf("\n");
+        printf("\n");
     }
 }
 
@@ -75,25 +75,6 @@ int same_state(struct game_state state1, struct game_state state2)
     return 1;
 }
 
-/*int is_visited(struct linked_list *visited_states, size_t serialized_state)
-{
-    struct list_node *current = visited_states->head;
-    struct game_state state2 = deserialize(serialized_state);
-
-    while (current != NULL)
-    {
-        struct game_state state1 = deserialize(current->value);
-        
-
-        if (same_state(state1, state2))
-        {
-            return 1;
-        }
-        current = current->next;
-    }
-
-    return 0;
-}*/
 int is_visited(struct linked_list *visited_states, struct game_state state2)
 {
     struct list_node *current = visited_states->head;
@@ -131,102 +112,6 @@ struct game_state dequeue(struct queue *q)
 
     return deserialize(serialized_state);
 }
-
-/*int number_of_moves(struct game_state start) 
-{
-    struct queue q; // Game queue
-    q.data.head = NULL; // init queue
-
-    enqueue(&q, start); // enqueue init state
-    print_queue(&q);
-    // Init a list of states that have been visited
-    struct linked_list visited_states; // States that have been visited
-    visited_states.head = NULL;
-
-    size_t serialized_initial = serialize(start); // Serialize the starting grid
-    insert_at_tail(&visited_states, serialized_initial); // insert it into the queue
-
-    // The goal state to reach
-    struct game_state goal_state = 
-    {
-        .tiles = 
-        {
-            {1, 2, 3, 4},
-            {5, 6, 7, 8},
-            {9, 10, 11, 12},
-            {13, 14, 15, 0}
-        },
-
-        .empty_row = 3,
-        .empty_col = 3,
-        .num_steps = 0
-    };
-
-    printf("The correct serial: %zu\n", serialize(goal_state));
-
-    int while_count = 0;
-    while (q.data.head != NULL && (while_count < 10))
-    {
-        print_queue(&q);
-        print_linked_list(&visited_states);
-        struct game_state current_state = dequeue(&q);
-        
-        printf("Number of moves right now: %d\n", current_state.num_steps);
-
-        struct list_node *check_node = q.data.head;
-
-        while (check_node != NULL)
-        {
-            struct game_state queued_state = deserialize(check_node->value);
-            if (same_state(queued_state, goal_state)) 
-            {
-                printf("Goal state found in queue!\n");
-                free_list(q.data);
-                free_list(visited_states);
-                return while_count;
-            }
-            check_node = check_node->next;
-        }
-
-        if (same_state(current_state, goal_state))
-        {
-            free_list(q.data);
-            return while_count;
-        }
-
-        else
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                struct game_state next_state = copy_state(current_state); // The current state with one more move
-
-                if (i == 0) move_up(&next_state);
-                if (i == 1) move_down(&next_state);
-                if (i == 2) move_left(&next_state);
-                if (i == 3) move_right(&next_state);
-
-
-                size_t serialized_next = serialize(next_state); // The serialized version of the next state
-
-                if (!is_visited(&visited_states, serialized_next))
-                {
-                    
-                    enqueue(&q, next_state);
-                    insert_at_tail(&visited_states, serialized_next);
-                }
-                else
-                {
-                    printf("State visisted: skipping\n");
-                }
-            }
-        }
-        while_count++;
-    }
-    
-    free_list(q.data);
-    free_list(visited_states);
-    return 0; 
-}*/
 
 int number_of_moves(struct game_state start) 
 {
@@ -269,7 +154,7 @@ int number_of_moves(struct game_state start)
     int size_linked_list = 0;
     while (q.data.head != NULL) 
     {
-        //printf("Ran %d times\n", size_linked_list);
+        printf("Ran %d times\n", size_linked_list);
         struct game_state current_state = dequeue(&q);
         
         for (int i = 0; i < 4; i++)
